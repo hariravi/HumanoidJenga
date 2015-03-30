@@ -29,7 +29,8 @@ public:
     //set up the publisher for the cmd_vel topic
     cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/base_controller/command", 1);
     // advertiseService
-    ros::ServiceServer service = nh_.advertiseService("/move_base",  &RobotDriver::moveBase_callback, this);
+    ros::ServiceServer service1 = nh_.advertiseService("/move_base",  &RobotDriver::moveBase_callback, this);
+    ros::ServiceServer service2 = nh_.advertiseService("/rotate_base", &RobotDriver::rotateBase_callback, this);
 
   }
 
@@ -38,6 +39,13 @@ bool moveBase_callback(move_base::MoveBase::Request &req, move_base::MoveBase::R
 {
   res.success = driveForwardOdom(req.distance);
   return res.success;
+}
+
+bool rotateBase_callback(move_base::RotateBase::Request &req, move_base::RotateBase::Response &res)
+{
+    // defaults to turning clockwise
+    res.success = turnOdom(true, req.angle);
+    return res.success;
 }
 
   //! Drive forward a specified distance based on odometry information

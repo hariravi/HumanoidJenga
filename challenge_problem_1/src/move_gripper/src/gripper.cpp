@@ -14,13 +14,29 @@ public:
   Gripper(ros::NodeHandle &nh){
     nh_ = nh;
     l_gripper_ = nh_.advertise<pr2_controllers_msgs::Pr2GripperCommand>("/l_gripper_controller/command", 1);
+
+    // advertise service
+    ros::ServiceServer service = nh_.advertiseService("/close_gripper", &Gripper::closeGripper_callback, this);
+
   }
 
   ~Gripper(){
   }
 
+bool closeGripper_callback(move_gripper::CloseGripper::Request &req,
+         move_gripper::CloseGripper::Response &res)
+{
+    if (req.close == true) {
+        res.success = close();
+    }
+    else {
+        res.success = open();
+    }
+    return res.success;
+}
+
   //Open the gripper
-  void open(){
+  bool open(){
 
     ROS_INFO("Opening Gripper");
     ros::Duration(0.5).sleep();
@@ -67,12 +83,12 @@ public:
       double dist_moved = relative_transform.getOrigin().length();
       //ROS_INFO("%f",dist_moved);
       if(dist_moved > 0.04) done = true;
-    
     }
+    return true;
   }
 
   //Close the gripper
-  void close(){
+  bool close(){
     
     ROS_INFO("Closing Gripper, hair of Renato");
     ros::Duration(0.5).sleep();
@@ -126,6 +142,7 @@ public:
       if(dist_moved > 0.03 || dist_moved < dist_moved_before) done = true;
     
     }
+    return true;
   }
 };
 
