@@ -1,8 +1,0 @@
-prefix=/home/edward/HumanoidJenga/challenge_problem_1/devel
-
-Name: system_launch
-Description: Description of system_launch
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/edward/HumanoidJenga/challenge_problem_1/devel/lib 
-Requires: 

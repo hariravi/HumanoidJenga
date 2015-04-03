@@ -1,8 +1,0 @@
-prefix=/home/edward/HumanoidJenga/challenge_problem_1/devel
-
-Name: move_gripper
-Description: Description of move_gripper
-Version: 0.0.0
-Cflags: -I/home/edward/HumanoidJenga/challenge_problem_1/devel/include
-Libs: -L/home/edward/HumanoidJenga/challenge_problem_1/devel/lib 
-Requires: 
