@@ -67,14 +67,14 @@ set(add_ints_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(add_ints_SOURCE_PREFIX /home/svr2112/HumanoidJenga/challenge_problem_1/src/add_ints)
-  set(add_ints_DEVEL_PREFIX /home/svr2112/HumanoidJenga/challenge_problem_1/devel)
+  set(add_ints_SOURCE_PREFIX /home/edward/HumanoidJenga/challenge_problem_1/src/add_ints)
+  set(add_ints_DEVEL_PREFIX /home/edward/HumanoidJenga/challenge_problem_1/devel)
   set(add_ints_INSTALL_PREFIX "")
   set(add_ints_PREFIX ${add_ints_DEVEL_PREFIX})
 else()
   set(add_ints_SOURCE_PREFIX "")
   set(add_ints_DEVEL_PREFIX "")
-  set(add_ints_INSTALL_PREFIX /home/svr2112/HumanoidJenga/challenge_problem_1/install)
+  set(add_ints_INSTALL_PREFIX /home/edward/HumanoidJenga/challenge_problem_1/install)
   set(add_ints_PREFIX ${add_ints_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(add_ints_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/svr2112/HumanoidJenga/challenge_problem_1/devel/include" STREQUAL "")
+if(NOT "/home/edward/HumanoidJenga/challenge_problem_1/devel/include" STREQUAL "")
   set(add_ints_INCLUDE_DIRS "")
-  set(_include_dirs "/home/svr2112/HumanoidJenga/challenge_problem_1/devel/include")
+  set(_include_dirs "/home/edward/HumanoidJenga/challenge_problem_1/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/svr2112/HumanoidJenga/challenge_problem_1/devel/include" STREQUAL 
         message(FATAL_ERROR "Project 'add_ints' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'jvarley <jvarley@todo.todo>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'add_ints' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/svr2112/HumanoidJenga/challenge_problem_1/src/add_ints/${idir}'.  Ask the maintainer 'jvarley <jvarley@todo.todo>' to fix it.")
+      message(FATAL_ERROR "Project 'add_ints' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/edward/HumanoidJenga/challenge_problem_1/src/add_ints/${idir}'.  Ask the maintainer 'jvarley <jvarley@todo.todo>' to fix it.")
     endif()
     _list_append_unique(add_ints_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/svr2112/HumanoidJenga/challenge_problem_1/devel/lib;/home/svr2112/HumanoidJenga/challenge_problem_1/devel/lib;/home/svr2112/challenge_problem_1/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/edward/HumanoidJenga/challenge_problem_1/devel/lib;/home/edward/HumanoidJenga/challenge_problem_1/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
