@@ -1,0 +1,8 @@
+prefix=/home/svr2112/HumanoidJenga/challenge_problem_1/devel
+
+Name: add_ints
+Description: Description of add_ints
+Version: 0.0.0
+Cflags: -I/home/svr2112/HumanoidJenga/challenge_problem_1/devel/include
+Libs: -L/home/svr2112/HumanoidJenga/challenge_problem_1/devel/lib 
+Requires: 
