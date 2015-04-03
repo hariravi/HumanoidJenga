@@ -3,6 +3,8 @@
 #include <actionlib/client/simple_action_client.h>
 #include <tf/transform_listener.h>
 
+#include "move_gripper/CloseGripper.h"
+
 class Gripper{
 private:
   ros::NodeHandle nh_;
@@ -151,6 +153,7 @@ int main(int argc, char** argv){
   ros::NodeHandle nh;
 
   Gripper gripper(nh);
+  ros::spin();
 
   gripper.open();
   gripper.close();

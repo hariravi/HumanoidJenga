@@ -9,7 +9,7 @@
 #include <tf/transform_listener.h>
 
 #include "move_base/MoveBase.h"
-
+#include "move_base/RotateBase.h"
 
 class RobotDriver
 {
@@ -18,6 +18,8 @@ private:
   ros::NodeHandle nh_;
   //! We will be publishing to the "cmd_vel" topic to issue commands
   ros::Publisher cmd_vel_pub_;
+  ros::ServiceServer service1;
+  ros::ServiceServer service2;
   //! We will be listening to TF transforms as well
   tf::TransformListener listener_;
 
@@ -29,8 +31,8 @@ public:
     //set up the publisher for the cmd_vel topic
     cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/base_controller/command", 1);
     // advertiseService
-    ros::ServiceServer service1 = nh_.advertiseService("/move_base",  &RobotDriver::moveBase_callback, this);
-    ros::ServiceServer service2 = nh_.advertiseService("/rotate_base", &RobotDriver::rotateBase_callback, this);
+    service1 = nh_.advertiseService("/move_base",  &RobotDriver::moveBase_callback, this);
+    service2 = nh_.advertiseService("/rotate_base", &RobotDriver::rotateBase_callback, this);
 
   }
 

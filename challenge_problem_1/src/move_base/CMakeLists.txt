@@ -50,6 +50,7 @@ find_package(catkin REQUIRED roscpp tf)
 add_service_files(
     FILES
     MoveBase.srv
+    RotateBase.srv
 #   Service1.srv
 #   Service2.srv
 )
