@@ -47,11 +47,13 @@ find_package(Eigen REQUIRED)
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
+add_service_files(
+  FILES
+  MoveRightArm.srv
+  MoveLeftArm.srv
 #   Service1.srv
 #   Service2.srv
-# )
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -61,10 +63,10 @@ find_package(Eigen REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
+generate_messages(
 #   DEPENDENCIES
 #   std_msgs  # Or other packages containing msgs
-# )
+)
 
 ###################################
 ## catkin specific configuration ##

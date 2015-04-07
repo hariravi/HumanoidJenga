@@ -18,8 +18,8 @@ private:
   ros::NodeHandle nh_;
   //! We will be publishing to the "cmd_vel" topic to issue commands
   ros::Publisher cmd_vel_pub_;
-  ros::ServiceServer service1;
-  ros::ServiceServer service2;
+  ros::ServiceServer service1_;
+  ros::ServiceServer service2_;
   //! We will be listening to TF transforms as well
   tf::TransformListener listener_;
 
@@ -31,8 +31,8 @@ public:
     //set up the publisher for the cmd_vel topic
     cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/base_controller/command", 1);
     // advertiseService
-    service1 = nh_.advertiseService("/move_base",  &RobotDriver::moveBase_callback, this);
-    service2 = nh_.advertiseService("/rotate_base", &RobotDriver::rotateBase_callback, this);
+    service1_ = nh_.advertiseService("/move_base",  &RobotDriver::moveBase_callback, this);
+    service2_ = nh_.advertiseService("/rotate_base", &RobotDriver::rotateBase_callback, this);
 
   }
 

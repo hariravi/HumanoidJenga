@@ -1,13 +1,18 @@
-#include <moveit/move_group_interface/move_group.h>
-#include <iostream>
+
+#include "move_arm.h"
 
 int main(int argc, char **argv)
 {
 
-  ros::init(argc, argv, "move_arm_example");
-  ros::NodeHandle node_handle;
+  ros::init(argc, argv, "move_arm");
+  ros::NodeHandle *node_handle = new ros::NodeHandle("");
+  
+  ROS_INFO("Initializing arms");
+  RobotArm arms(*node_handle);
+  ROS_INFO("arms initted");
+  ros::spin();
 
-
+/*
   moveit::planning_interface::MoveGroup l_arm_move_group("left_arm");
 
 
@@ -30,7 +35,9 @@ int main(int argc, char **argv)
 
   // plan the motion and then move the group to the sampled target 
   l_arm_move_group.move();
-
+*/
 
   return 0;
 }
+
+
