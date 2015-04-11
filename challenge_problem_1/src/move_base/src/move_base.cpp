@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   ROS_INFO("About to initialize driver");
   RobotDriver driver(*nh);
   ROS_INFO("driver initiated");
-  driver.driveForwardOdom(1.5);
+  //driver.driveForwardOdom(1.5);
   ROS_INFO("ros information");
   ros::spin();
   ROS_INFO("SHOULD NEVER PRINT");

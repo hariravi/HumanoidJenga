@@ -3,39 +3,137 @@
 import rospy
 
 from add_ints.srv import AddTwoInts
+from move_gripper.srv import CloseGripper
+from move_base.srv import MoveBase, RotateBase
+from move_arm.srv import MoveRightArm, MoveLeftArm
+#from move_head.srv import MoveHead
 
-#AddTwoInts = '/../../add_ints/srv/AddTwoInts.srv'
+add_int = None
+mover = None
+move_gripper = None
+rotater = None
+move_left_arm = None
+move_right_arm = None
+#mover_head = None
 
-if __name__ == '__main__':
-	print 'checkpoint1'
+def init_gripper_service():
+	rospy.wait_for_service('move_gripper')
+	return rospy.ServiceProxy('move_gripper', CloseGripper)
 
+def init_move_base():
+	rospy.wait_for_service('move_base')
+	mover = rospy.ServiceProxy('move_base', MoveBase)
+	return mover
 
-    	#initialize the node
-    	rospy.init_node('add_client', anonymous=True)
-	print 'checkpointEOJNGKENJG'
-	# Move base sample call
+def init_rotate_base():
+	rospy.wait_for_service('rotate_base')
+	rotater = rospy.ServiceProxy('rotate_base', RotateBase)
+	return rotater
+
+def init_add_ints():
 	rospy.wait_for_service('add_two_ints')
-	print 'checkpoint3'
-
 	add_int = rospy.ServiceProxy('add_two_ints', AddTwoInts)
-#    move_base = rospy.ServiceProxy('move_base', '/../../move_base/srv/MoveBase.srv' )
-	distance = .75
+	return add_int
+
+def init_left_arm_service():
+	rospy.wait_for_service('move_left_arm')
+	return rospy.ServiceProxy('move_left_arm', MoveLeftArm)
+
+def init_right_arm_service():
+	rospy.wait_for_service('move_right_arm')
+	return rospy.ServiceProxy('move_right_arm', MoveRightArm)
+
+'''
+def init_move_head_service():
+	rospy.wait_for_service('move_head')
+	rotater = rospy.ServiceProxy('move_head', MoveHade)
+	return mover_head
+'''
+
+def move_gripper(should_close):
 	try:
-		mb = add_int(4,5)
-		print mb
-	#mb = move_base(distance)
+		mb = move_gripper(should_close)
 	except rospy.ServiceException as exc:
 		print("Service did not process request: " + str(exc))
+
+def close_gripper():
+	move_gripper(False)
+
+def open_gripper():
+	move_gripper(True)
+
+def add_two_ints(a, b):
+	try:
+		sum_two = add_int(a,b)
+		print sum_two
+	except rospy.ServiceException as exc:
+		print("Service did not process request: " + str(exc))
+
+def move_base(d):
+	try:
+		mv = mover(d)
+		print "What smooth movements"
+	except rospy.ServiceException as exc:
+		print("Service did not process request: " + str(exc))
+
+def rotate_base(angle):
+	try:
+		rb = rotater(angle)
+		print "What fluid rotation"
+	except rospy.ServiceException as exc:
+		print("Service did not process request: " + str(exc))
+
+def move_arm(right_arm, x, y, z, ow, ox, oy, oz):
+	try:	
+		if right_arm:
+			ma = move_right_arm(x,y,z,ow,ox,oy,oz)
+		else:
+			ma = move_left_arm(x,y,z,ow,ox,oy,oz)
+	except rospy.ServiceException as exc:
+		print("Service did not process request: " + str(exc))
+
+def move_left_arm(x, y, z, ow, ox, oy, oz):
+	move_arm(False, x, y, z, ow, ox, oy, oz)
+
+def move_right_arm(x, y, z, ow, ox, oy, oz):
+	move_arm(True, x, y, z, ow, ox, oy, oz)
+			
+def init_services():
+	global add_int
+	add_int = init_add_ints()
+	global mover
+	mover = init_move_base()
+	global move_gripper
+	move_gripper = init_gripper_service()
+	global rotater
+	rotater = init_rotate_base()
+	global move_left_arm
+	move_left_arm = init_left_arm_service()
+	global move_right_arm
+	move_right_arm = init_right_arm_service()
+	
+	#global mover_head
+	#mover_head = init_move_head_service()
     
-'''
-    # Rotate base sample call
-    rospy.wait_for_service('rotate_base')
-    move_base = rospy.ServiceProxy('rotate_base', '/../../move_base/srv/RotateBase.srv' )
-    # Angle in radians
-    angle = 3.14
-    try:
-        rb = rotate_base(distance)
-    except rospy.ServiceException as exc:
-        print("Service did not process request: " + str(exc))
-'''
+if __name__ == '__main__':
+    	rospy.init_node('Hair_of_Renato_client', anonymous=True)
+
+	init_services()
+
+	int_1 = 7;
+	int_2 = 11;	
+	add_two_ints(int_1, int_2)
+
+	move_base(1.1)
+
+	rotate_base(1.7)
+
+	#move_left_arm(0,0,0,0,0,0,0)
+	#move_right_arm(0,0,0,0,0,0,0)
+
+	open_gripper()
+	close_gripper()	
+
+	print "The hair of Renato"
+
 	#rospy.loginfo("Let's see if this works")

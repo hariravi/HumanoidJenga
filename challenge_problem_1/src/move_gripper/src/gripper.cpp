@@ -10,7 +10,8 @@ private:
   ros::NodeHandle nh_;
   ros::Publisher l_gripper_;
   tf::TransformListener listener_;
-  ros::ServiceServer service_;
+  ros::ServiceServer service;
+
 
 public:
   //Action client initialization
@@ -19,8 +20,8 @@ public:
     l_gripper_ = nh_.advertise<pr2_controllers_msgs::Pr2GripperCommand>("/l_gripper_controller/command", 1);
 
     // advertise service
-    service_ = nh_.advertiseService("/close_gripper", &Gripper::closeGripper_callback, this);
-
+    service = nh_.advertiseService("/move_gripper", &Gripper::closeGripper_callback, this);
+    ROS_INFO("We will start in one minute. Hari, you're not welcome to class.");
   }
 
   ~Gripper(){
@@ -155,9 +156,6 @@ int main(int argc, char** argv){
 
   Gripper gripper(nh);
   ros::spin();
-
-  gripper.open();
-  gripper.close();
 
   return 0;
 }

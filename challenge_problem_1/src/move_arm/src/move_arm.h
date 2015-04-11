@@ -14,8 +14,8 @@ private:
   //! The node handle we'll be using
   ros::NodeHandle nh_;
   //! our arms
-  moveit::planning_interface::MoveGroup l_arm_move_group;
-  moveit::planning_interface::MoveGroup r_arm_move_group;
+  //moveit::planning_interface::MoveGroup l_arm_move_group;
+  //moveit::planning_interface::MoveGroup r_arm_move_group;
   //! our services
   ros::ServiceServer service1_;
   ros::ServiceServer service2_;
@@ -26,8 +26,8 @@ public:
   {
     nh_ = nh;
     // init our arms
-    l_arm_move_group = moveit::planning_interface::MoveGroup("left_arm");
-    r_arm_move_group = moveit::planning_interface::MoveGroup("right_arm");
+    //l_arm_move_group = moveit::planning_interface::MoveGroup("left_arm");
+    //r_arm_move_group = moveit::planning_interface::MoveGroup("right_arm");
     // advertise service
     service1_ = nh_.advertiseService("/move_right_arm", &RobotArm::rightArm_cb, this);
     service2_ = nh_.advertiseService("/move_left_arm", &RobotArm::leftArm_cb, this);
@@ -46,6 +46,7 @@ bool rightArm_cb(move_arm::MoveRightArm::Request &req, move_arm::MoveRightArm::R
   goal_end_effector_pose.position.y = req.y;
   goal_end_effector_pose.position.z = req.z;
 
+  moveit::planning_interface::MoveGroup r_arm_move_group("right_arm");
   r_arm_move_group.setPoseTarget(goal_end_effector_pose);
   r_arm_move_group.move();
   // TODO: don't just return success
@@ -66,6 +67,7 @@ bool leftArm_cb(move_arm::MoveLeftArm::Request &req, move_arm::MoveLeftArm::Resp
   goal_end_effector_pose.position.z = req.z;
 
   // set end effector pose
+  moveit::planning_interface::MoveGroup l_arm_move_group("left_arm");
   l_arm_move_group.setPoseTarget(goal_end_effector_pose);
   l_arm_move_group.move();
   // TODO: don't just return success
@@ -74,3 +76,5 @@ bool leftArm_cb(move_arm::MoveLeftArm::Request &req, move_arm::MoveLeftArm::Resp
 }
 
 };
+
+#endif
