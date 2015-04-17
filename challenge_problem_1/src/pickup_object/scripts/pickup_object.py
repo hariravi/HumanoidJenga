@@ -57,10 +57,10 @@ def move_gripper(should_close):
 		print("Service did not process request: " + str(exc))
 
 def close_gripper():
-	move_gripper(False)
+	move_gripper(True)
 
 def open_gripper():
-	move_gripper(True)
+	move_gripper(False)
 
 def add_two_ints(a, b):
 	try:
@@ -99,19 +99,20 @@ def move_right_arm(x, y, z, ow, ox, oy, oz):
 	move_arm(True, x, y, z, ow, ox, oy, oz)
 			
 def init_services():
+	'''	
 	global add_int
 	add_int = init_add_ints()
+	'''	
 	global mover
 	mover = init_move_base()
-	global move_gripper
-	move_gripper = init_gripper_service()
-	global rotater
-	rotater = init_rotate_base()
 	global move_left_arm
 	move_left_arm = init_left_arm_service()
 	global move_right_arm
 	move_right_arm = init_right_arm_service()
-	
+	global move_gripper
+	move_gripper = init_gripper_service()
+	global rotater
+	rotater = init_rotate_base()
 	#global mover_head
 	#mover_head = init_move_head_service()
     
@@ -120,20 +121,40 @@ if __name__ == '__main__':
 
 	init_services()
 
-	int_1 = 7;
-	int_2 = 11;	
-	add_two_ints(int_1, int_2)
+	#int_1 = 7;
+	#int_2 = 11;	
+	#add_two_ints(int_1, int_2)
 
-	move_base(1.1)
+	#move_base(.1)
+	basex = 0
+	basey = 0
 
-	rotate_base(1.7)
-
-	#move_left_arm(0,0,0,0,0,0,0)
-	#move_right_arm(0,0,0,0,0,0,0)
-
-	open_gripper()
-	close_gripper()	
-
+	print "Tyring to move the arm"
+	x = .38
+	y = .73
+	z = .6
+	ow = 1
+	ox = 1
+	oy = 1
+	oz = 1
+        open_gripper()
+        rospy.sleep(1.2)
+	move_left_arm(basex+x,basey+y,z,ow,ox,oy,oz)
+	rospy.sleep(5)
+	
+	print "Did it move"
+	
+	basex += 1.158
+	move_base(basex)
+	print "Hopefully the gripper has opened"
+	close_gripper()
+	print "Hopefully the gripper has closed"
+	rospy.sleep(15)
+	z = .72
+	y = .65
+	# WHY CAN I ONLY MOVE THE ARM ONCE?????????
+	#print "Move your arm you stupid robot"	
+	move_left_arm(basex+x,y,z,ow,ox,oy,oz)
 	print "The hair of Renato"
 
 	#rospy.loginfo("Let's see if this works")
