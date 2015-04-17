@@ -47,6 +47,7 @@ bool rightArm_cb(move_arm::MoveRightArm::Request &req, move_arm::MoveRightArm::R
   goal_end_effector_pose.position.z = req.z;
 
   moveit::planning_interface::MoveGroup r_arm_move_group("right_arm");
+  r_arm_move_group.setPoseReferenceFrame("base_link");
   r_arm_move_group.setPoseTarget(goal_end_effector_pose);
   r_arm_move_group.asyncMove();
   // TODO: don't just return success
@@ -68,6 +69,7 @@ bool leftArm_cb(move_arm::MoveLeftArm::Request &req, move_arm::MoveLeftArm::Resp
 
   // set end effector pose
   moveit::planning_interface::MoveGroup l_arm_move_group("left_arm");
+  l_arm_move_group.setPoseReferenceFrame("base_link");
   l_arm_move_group.setPoseTarget(goal_end_effector_pose);
   l_arm_move_group.asyncMove();
   

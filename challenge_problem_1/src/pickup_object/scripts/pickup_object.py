@@ -126,8 +126,6 @@ if __name__ == '__main__':
 	#add_two_ints(int_1, int_2)
 
 	#move_base(.1)
-	basex = 0
-	basey = 0
 
 	print "Tyring to move the arm"
 	x = .38
@@ -139,13 +137,12 @@ if __name__ == '__main__':
 	oz = 1
         open_gripper()
         rospy.sleep(1.2)
-	move_left_arm(basex+x,basey+y,z,ow,ox,oy,oz)
+	move_left_arm(x,y,z,ow,ox,oy,oz)
 	rospy.sleep(5)
 	
 	print "Did it move"
 	
-	basex += 1.158
-	move_base(basex)
+	move_base(1.158)
 	print "Hopefully the gripper has opened"
 	close_gripper()
 	print "Hopefully the gripper has closed"
@@ -154,7 +151,7 @@ if __name__ == '__main__':
 	y = .65
 	# WHY CAN I ONLY MOVE THE ARM ONCE?????????
 	#print "Move your arm you stupid robot"	
-	move_left_arm(basex+x,y,z,ow,ox,oy,oz)
+	move_left_arm(x,y,z,ow,ox,oy,oz)
 	print "The hair of Renato"
 
 	#rospy.loginfo("Let's see if this works")
