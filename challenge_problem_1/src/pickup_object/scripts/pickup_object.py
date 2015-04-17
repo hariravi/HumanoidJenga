@@ -97,6 +97,12 @@ def move_left_arm(x, y, z, ow, ox, oy, oz):
 
 def move_right_arm(x, y, z, ow, ox, oy, oz):
 	move_arm(True, x, y, z, ow, ox, oy, oz)
+
+def hover_left_arm(x, y, z):
+	move_arm(True, x, y, z + 1, 1, 0, 0, -1)
+
+def hover_right_arm(x, y, z):
+	move_arm(False, x, y, z + 1, 1, 0, 0, -1)
 			
 def init_services():
 	'''	
