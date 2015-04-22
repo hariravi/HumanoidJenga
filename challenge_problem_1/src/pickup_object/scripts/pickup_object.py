@@ -3,7 +3,7 @@
 import rospy
 
 from add_ints.srv import AddTwoInts
-from move_gripper.srv import CloseGripper
+from move_gripper.srv import CloseGripper, CloseRightGripper
 from move_base.srv import MoveBase, RotateBase
 from move_arm.srv import MoveRightArm, MoveLeftArm
 #from move_head.srv import MoveHead
@@ -19,6 +19,10 @@ move_right_arm = None
 def init_gripper_service():
 	rospy.wait_for_service('move_gripper')
 	return rospy.ServiceProxy('move_gripper', CloseGripper)
+
+def init_right_gripper_service():
+	rospy.wait_for_service('move_right_gripper')
+	return rospy.ServiceProxy('move_right_gripper', CloseRightGripper)
 
 def init_move_base():
 	rospy.wait_for_service('move_base')
@@ -61,6 +65,12 @@ def close_gripper():
 
 def open_gripper():
 	move_gripper(False)
+
+def close_right_gripper():
+	move_right_gripper(True)
+
+def open_right_gripper():
+	move_right_gripper(False)
 
 def add_two_ints(a, b):
 	try:
@@ -113,6 +123,8 @@ def init_services():
 	move_gripper = init_gripper_service()
 	global rotater
 	rotater = init_rotate_base()
+	global move_right_gripper
+	move_right_gripper = init_right_gripper_service()
 	#global mover_head
 	#mover_head = init_move_head_service()
     
@@ -127,31 +139,41 @@ if __name__ == '__main__':
 
 	#move_base(.1)
 
-	print "Tyring to move the arm"
-	x = .38
-	y = .73
-	z = .6
-	ow = 1
-	ox = 1
-	oy = 1
-	oz = 1
-        open_gripper()
+	print "Trying to move the arm"
+	x = .4
+	y = .4
+	z = .7
+	ow = 0
+	ox = 0.707
+	oy = 0.
+	oz = -0.707
+
+	# ow=ox=oy=0.5;oz=-0.5;z=0.6;x=.38;y=.73 --> parallel
+	# ow=oy=0;ox=0.707;oz=-0.707;z=0.6 or 0.7;x=.38 or 0.4;y=.73 --> perpendicular
+
+        open_right_gripper()
+	#open_gripper()
         rospy.sleep(1.2)
+	move_right_arm(x,-1*y,z,ow,ox,oy,oz)
+	rospy.sleep(2.0)
 	move_left_arm(x,y,z,ow,ox,oy,oz)
-	rospy.sleep(5)
+	open_gripper()
+	
+	rospy.sleep(2.0)
 	
 	print "Did it move"
 	
-	move_base(1.158)
+	#move_base(1.158)
 	print "Hopefully the gripper has opened"
-	close_gripper()
+	#close_right_gripper()
 	print "Hopefully the gripper has closed"
-	rospy.sleep(15)
-	z = .72
-	y = .65
+	#rospy.sleep(15)
+	#z = .72
+	#y = .65
 	# WHY CAN I ONLY MOVE THE ARM ONCE?????????
 	#print "Move your arm you stupid robot"	
-	move_left_arm(x,y,z,ow,ox,oy,oz)
+	#move_left_arm(x,y,z,ow,ox,oy,oz)
 	print "The hair of Renato"
-
+	
 	#rospy.loginfo("Let's see if this works")
+

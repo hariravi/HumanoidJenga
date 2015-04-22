@@ -50,6 +50,7 @@ find_package(catkin REQUIRED roscpp tf)
 add_service_files(
     FILES
     CloseGripper.srv
+    CloseRightGripper.srv
 )
 
 ## Generate actions in the 'action' folder
