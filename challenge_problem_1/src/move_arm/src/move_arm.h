@@ -68,7 +68,9 @@ bool leftArm_cb(move_arm::MoveLeftArm::Request &req, move_arm::MoveLeftArm::Resp
 
   // set end effector pose
   moveit::planning_interface::MoveGroup l_arm_move_group("left_arm");
-  l_arm_move_group.setPoseTarget(goal_end_effector_pose);
+  //l_arm_move_group.setPoseTarget(goal_end_effector_pose);
+  l_arm_move_group.setPositionTarget(req.x, req.y, req.z);
+  l_arm_move_group.setRPYTarget(req.ox, req.oy, req.oz);
   l_arm_move_group.asyncMove();
   
   

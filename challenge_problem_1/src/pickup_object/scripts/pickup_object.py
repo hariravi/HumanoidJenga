@@ -99,10 +99,10 @@ def move_right_arm(x, y, z, ow, ox, oy, oz):
 	move_arm(True, x, y, z, ow, ox, oy, oz)
 
 def hover_left_arm(x, y, z):
-	move_arm(True, x, y, z + 1, 1, 0, 0, -1)
+	move_arm(False, x, y, z, 1, 1, 1, 0)
 
 def hover_right_arm(x, y, z):
-	move_arm(False, x, y, z + 1, 1, 0, 0, -1)
+	move_arm(True, x, y, z + 1, 1, 0, 0, -1)
 			
 def init_services():
 	'''	
@@ -143,9 +143,10 @@ if __name__ == '__main__':
 	ox = 1
 	oy = 1
 	oz = 1
-        open_gripper()
-        rospy.sleep(1.2)
-	move_left_arm(basex+x,basey+y,z,ow,ox,oy,oz)
+        #open_gripper()
+        #rospy.sleep(1.2)
+	hover_left_arm(0,0,0)
+	'''	
 	rospy.sleep(5)
 	
 	print "Did it move"
@@ -164,3 +165,4 @@ if __name__ == '__main__':
 	print "The hair of Renato"
 
 	#rospy.loginfo("Let's see if this works")
+	'''
