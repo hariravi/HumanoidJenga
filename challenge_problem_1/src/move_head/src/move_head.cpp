@@ -77,7 +77,17 @@ int main(int argc, char** argv)
 {
   //init the ROS node
   ros::init(argc, argv, "robot_driver");
+  int x = 2.5;
+  int y = 0;
+  int z = 0;
+
+  if (argc == 4) {
+     x = atof(argv[1]);
+     y = atof(argv[2]);
+     z = atof(argv[3]);
+  }
 
   RobotHead head;
-  head.shakeHead(10);
+  //head.shakeHead(10);
+  head.lookAt("base_link",x,y,z);
 }
